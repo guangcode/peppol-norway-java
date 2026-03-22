@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.peppolnorway</groupId>
+        <artifactId>peppol-norway-java</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>peppol-sender-spring</artifactId>
+    <description>
+        Spring Boot application for sending EHF invoices via oxalis-ng.
+        Bridges Google Guice (oxalis-ng) with the Spring IoC container.
+    </description>
+
+    <dependencies>
+
+        <!-- ── Internal ──────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>io.github.peppolnorway</groupId>
+            <artifactId>peppol-invoice-builder</artifactId>
+        </dependency>
+
+        <!-- ── Spring Boot ───────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- ── oxalis-ng ─────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>network.oxalis</groupId>
+            <artifactId>oxalis-ng-outbound</artifactId>
+            <version>${oxalis.ng.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-server</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-servlet</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- ── PEPPOL SBDH ───────────────────────────────────────────── -->
+        <dependency>
+            <groupId>network.oxalis.vefa</groupId>
+            <artifactId>peppol-sbdh</artifactId>
+            <version>${vefa.peppol.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>network.oxalis.vefa</groupId>
+            <artifactId>peppol-common</artifactId>
+            <version>${vefa.peppol.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>network.oxalis.peppol</groupId>
+            <artifactId>peppol-sbdh</artifactId>
+            <version>${peppol.sbdh.version}</version>
+        </dependency>
+
+        <!-- ── JAXB ──────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ── Utilities ─────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- ── Test ──────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-context</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-common</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-trace</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-metrics</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-logs</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.peppolnorway</groupId>
+    <artifactId>peppol-norway-java</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>peppol-norway-java</name>
+    <description>
+        Complete Java solution for generating and transmitting EHF 3.0 / PEPPOL BIS Billing 3.0
+        invoices on the Norwegian PEPPOL network. Includes UBL XML builder, VAT code mapping,
+        and a Spring Boot starter backed by oxalis-ng.
+    </description>
+    <url>https://github.com/yourname/peppol-norway-java</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <modules>
+        <module>peppol-api</module>
+        <module>peppol-invoice-builder</module>
+        <module>peppol-sender-spring</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spring.boot.version>3.2.5</spring.boot.version>
+        <oxalis.ng.version>1.2.2</oxalis.ng.version>
+        <vefa.peppol.version>4.2.1</vefa.peppol.version>
+        <peppol.sbdh.version>2.5.0</peppol.sbdh.version>
+        <lombok.version>1.18.38</lombok.version>
+        <junit.version>5.10.0</junit.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Internal modules -->
+            <dependency>
+                <groupId>io.github.peppolnorway</groupId>
+                <artifactId>peppol-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.peppolnorway</groupId>
+                <artifactId>peppol-invoice-builder</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- oxalis-ng -->
+            <dependency>
+                <groupId>network.oxalis</groupId>
+                <artifactId>oxalis-ng-outbound</artifactId>
+                <version>${oxalis.ng.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>network.oxalis.vefa</groupId>
+                <artifactId>peppol-common</artifactId>
+                <version>${vefa.peppol.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>network.oxalis.vefa</groupId>
+                <artifactId>peppol-sbdh</artifactId>
+                <version>${vefa.peppol.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>network.oxalis.peppol</groupId>
+                <artifactId>peppol-sbdh</artifactId>
+                <version>${peppol.sbdh.version}</version>
+            </dependency>
+
+            <!-- JAXB (Jakarta) -->
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>4.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>4.0.5</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- Lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- Testing -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

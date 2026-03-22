@@ -1,0 +1,46 @@
+# Network and server configuration
+server:
+  port: 8080
+
+spring:
+  application:
+    name: peppol-sender
+  jackson:
+    date-format: yyyy-MM-dd
+    default-property-inclusion: non_null  # Exclude null fields from JSON output
+    serialization:
+      write-dates-as-timestamps: false    # Use ISO-8601 instead of numeric timestamps
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Oxalis-NG Configuration
+#
+# Notes:
+#   If 'oxalis.home' is configured here, it will be automatically set as 
+#   the JVM system property OXALIS_HOME.
+#
+#   Precedence: 
+#   Environment Var OXALIS_HOME > -DOXALIS_HOME=... > This config > default ~/.oxalis/
+#
+#   Minimum configuration for 'oxalis.conf' (placed inside OXALIS_HOME):
+#
+#     oxalis.keystore {
+#       path     = "your-keystore.jks"
+#       password = "keystore-password"
+#       key.alias    = "your-alias"
+#       key.password = "key-password"
+#     }
+#     oxalis.mode = TEST   # Options: TEST or PRODUCTION
+# ──────────────────────────────────────────────────────────────────────────────
+oxalis:
+  # If left empty, the OXALIS_HOME env variable or default ~/.oxalis/ will be used
+  home: ""
+  # Used for log output only; the actual engine mode is controlled via oxalis.conf
+  mode: LOCAL
+  # Whether to perform an SMP lookup to verify receiver registration before sending
+  lookup-before-send: false
+
+logging:
+  level:
+    root: INFO
+    io.github.peppolnorway: DEBUG
+    network.oxalis: INFO
