@@ -82,7 +82,7 @@ peppol-norway-java/
 ### 1. Build
 
 ```bash
-git clone https://github.com/yourname/peppol-norway-java.git
+git clone https://github.com/guangcode/oxalis-spring-boot-starter
 cd peppol-norway-java
 mvn clean package -DskipTests
 ```
